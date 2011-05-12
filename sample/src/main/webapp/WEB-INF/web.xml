@@ -1,7 +1,95 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <display-name>Spring Security And Vaadin Demo Application</display-name>
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <!--
+      - Location of the XML file that defines the root application context
+      - Applied by ContextLoaderListener.
+      -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:vaadin-spring-security.xml
+        </param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>cas.root</param-value>
+    </context-param>
+
+    <!--
+        Include the character encoding Filter as per JASIG recommenation when doing Single Sign Out
+        https://wiki.jasig.org/display/CASC/Configuring+Single+Sign+Out
+    -->
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--
+        Included to support Single Logout. Note that the SingleSignOutFilter is included in the
+        springSecurityFilterChain. However, it could also be placed as the first filter-mapping
+        in the web.xml
+    -->
+    <listener>
+        <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+    </listener>
+
+    <!--
+      - Loads the root application context of this web app at startup.
+      - The application context is then available via
+      - WebApplicationContextUtils.getWebApplicationContext(servletContext).
+    -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>vaadin-loader-with-cas</servlet-name>
+        <servlet-class>hailu.vaadin.authentication.core.VaadinAbstractApplicationServlet</servlet-class>
+        <init-param>
+            <param-name>vaadin-application</param-name>
+            <param-value>hailu.vaadin.authentication.sample.SampleVaadinApplication</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>vaadin-loader-with-cas</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+
+
+    <!--Following are need only if you want to use the internal JSP to login-->
+    <servlet>
+    	<servlet-name>login</servlet-name>
+    	<jsp-file>/jsp/login.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+    	<servlet-name>login</servlet-name>
+    	<url-pattern>/jsp/login</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

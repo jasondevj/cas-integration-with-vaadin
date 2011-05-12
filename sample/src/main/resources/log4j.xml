@@ -12,67 +12,17 @@
         </layout>
     </appender>
 
-    <!--
-         Read
-         http://logging.apache.org/log4j/docs/api/org/apache/log4j/DailyRollingFileAppender.html
-         for more information on DaliyRollingFileAppender configuration
-         options.
-     -->
-    <appender name="error" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="../logs/cp-portal_error.log" />
-        <param name="Threshold" value="error" />
-        <!-- uncomment this line for hourly logs-->
-        <!--<param name="DatePattern" value="'.'yyyy-MM-dd-HH"/>-->
-        <!-- uncomment this line for daily logs-->
-        <param name="DatePattern" value="'.'yyyy-MM-dd" />
-        <!-- uncomment this line for weekly logs-->
-        <!--<param name="DatePattern" value="'.'yyyy-ww"/>-->
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{DATE} %-5p %c{1} - %m%n" />
-        </layout>
-    </appender>
-
     <appender name="trace" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="../logs/cp-portal_trace.log" />
+        <param name="File" value="../logs/vaadin_cas_sample_trace.log" />
         <param name="Threshold" value="trace" />
-        <!-- uncomment this line for hourly logs-->
-        <!--<param name="DatePattern" value="'.'yyyy-MM-dd-HH"/>-->
-        <!-- uncomment this line for daily logs-->
         <param name="DatePattern" value="'.'yyyy-MM-dd" />
-        <!-- uncomment this line for weekly logs-->
-        <!--<param name="DatePattern" value="'.'yyyy-ww"/>-->
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{DATE} %-5p %c{1} %x %X{ID}- %m%n" />
         </layout>
     </appender>
 
-    <appender name="eventLog" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="../logs/cp-portal_trans.log" />
-        <param name="Threshold" value="info" />
-        <!-- uncomment this line for hourly logs-->
-        <!--<param name="DatePattern" value="'.'yyyy-MM-dd-HH"/>-->
-        <!-- uncomment this line for daily logs-->
-        <param name="DatePattern" value="'.'yyyy-MM-dd" />
-        <!-- uncomment this line for weekly logs-->
-        <!--<param name="DatePattern" value="'.'yyyy-ww"/>-->
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{DATE} %-5p %c{1} - %m%n" />
-        </layout>
-    </appender>
-
-    <category name="hsenidmobile.orca.core.util.eventlog" additivity="false">
-        <priority value="trace" />
-        <appender-ref ref="eventLog"/>
-    </category>
-
-    <category name="hsenidmobile" additivity="false">
-        <priority value="debug" />
-        <appender-ref ref="trace"/>
-        <appender-ref ref="error"/>
-    </category>
-
     <category name="org" additivity="false">
-        <priority value="error" />
+        <priority value="info" />
         <appender-ref ref="error" />
     </category>
 
@@ -86,17 +36,12 @@
         <appender-ref ref="error" />
     </category>
 
-    <category name="com.mchange" additivity="false">
-        <priority value="erorr" />
-        <appender-ref ref="error" />
-    </category>
-
     <category name="org.springframework" additivity="false">
-        <priority value="error" />
+        <priority value="debug" />
     </category>
 
     <root>
-        <priority value="error" />
+        <priority value="info" />
         <appender-ref ref="console" />
         <appender-ref ref="trace" />
     </root>

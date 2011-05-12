@@ -1,21 +1,58 @@
-/*
- *   (C) Copyright 2010-2011 hSenid Software International (Pvt) Limited.
- *   All Rights Reserved.
- *
- *   These materials are unpublished, proprietary, confidential source code of
- *   hSenid Software International (Pvt) Limited and constitute a TRADE SECRET
- *   of hSenid Software International (Pvt) Limited.
- *
- *   hSenid Software International (Pvt) Limited retains all title to and intellectual
- *   property rights in these materials.
- *
- */
 package hailu.vaadin.authentication.core;
+
+import com.vaadin.Application;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.context.WebApplicationContext;
+
+import javax.servlet.ServletConfig;
+import java.util.Collection;
 
 /**
  * $LastChangedDate$
  * $LastChangedBy$
  * $LastChangedRevision$
  */
-public class VaadinApplication {
+public abstract class VaadinApplication extends Application {
+
+    private WebApplicationContext webApplicationContext;
+    private ServletConfig servletConfig;
+
+    public String currentUserName() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    public Collection<GrantedAuthority> availableAuthorities() {
+        return SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+    }
+
+    public boolean hasAnyRole(String ... roles){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<GrantedAuthority> authorities = authentication.getAuthorities();
+		for(GrantedAuthority authority: authorities){
+			for(String role: roles){
+				if(role.equals(authority.getAuthority())){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+    public WebApplicationContext getWebApplicationContext() {
+        return webApplicationContext;
+    }
+
+    public void setWebApplicationContext(WebApplicationContext webApplicationContext) {
+        this.webApplicationContext = webApplicationContext;
+    }
+
+    public ServletConfig getServletConfig() {
+        return servletConfig;
+    }
+
+    public void setServletConfig(ServletConfig servletConfig) {
+        this.servletConfig = servletConfig;
+    }
 }

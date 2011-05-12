@@ -1,0 +1,19 @@
+###################################################
+########## CAS Integration with Vaadin ############
+###################################################
+
+
+This is a Spring-security wrapper for Vaadin. Using this Vaadin applications can use CAS to authenticate the user.
+All cas filters are configured in the core module, Vaadin applications just need to have a cas.properties file with the
+configurations and a spring-security.xml to set the filter URL and the datasource (could be a DB or just and XML).
+
+See the Sample application on how to deploy.
+
+To try out SSO try clicking on the 'do something' button on the sample application this will direct the user to CAS
+if the user is not logged-in
+
+
+NOTE :
+JSP login also have been added for the sample application but that is just for demonstration
+jsp login will not help for the SSO login. You can try jsp login by using '/jsp/login'
+
