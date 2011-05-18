@@ -3,9 +3,10 @@
 ###################################################
 
 
-This is a Spring-security wrapper for Vaadin. Using this Vaadin applications can use CAS to authenticate the user.
+This is a Spring-Security wrapper for Vaadin. Using this Vaadin applications can use CAS to authenticate the user.
 All cas filters are configured in the core module, Vaadin applications just need to have a cas.properties file with the
-configurations and a spring-security.xml to set the filter URL and the datasource (could be a DB or just and XML).
+configurations and a spring-security.xml to set the filter URL and the datasource (could be a DB or just and XML)
+and have the core as a dependency.
 
 See the Sample application on how to deploy.
 
