@@ -66,9 +66,9 @@
 
     <servlet>
         <servlet-name>vaadin-loader-with-cas</servlet-name>
-        <servlet-class>hailu.vaadin.authentication.core.VaadinAbstractApplicationServlet</servlet-class>
+        <servlet-class>hailu.vaadin.authentication.core.VaadinApplicationServlet</servlet-class>
         <init-param>
-            <param-name>vaadin-application</param-name>
+            <param-name>application</param-name>
             <param-value>hailu.vaadin.authentication.sample.SampleVaadinApplication</param-value>
         </init-param>
     </servlet>

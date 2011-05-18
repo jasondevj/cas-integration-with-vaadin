@@ -14,17 +14,17 @@ import javax.servlet.http.HttpServletRequest;
  * $LastChangedBy$
  * $LastChangedRevision$
  */
-public class VaadinAbstractApplicationServlet extends AbstractApplicationServlet {
+public class VaadinApplicationServlet extends AbstractApplicationServlet {
 
-    private static final String VAADIN_WINDOW = "vaadin-application";
+    private static final String VAADIN_WINDOW = "application";
     private String vaadinWindow;
     private WebApplicationContext webApplicationContext;
     private ServletConfig servletConfig;
 
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
-        this.servletConfig = servletConfig;
         super.init(servletConfig);
+        this.servletConfig = servletConfig;
         vaadinWindow = servletConfig.getInitParameter(VAADIN_WINDOW);
         webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletConfig.getServletContext());
     }
